@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}CSV Upload - shortlist.ai{% endblock %}
+
+{% block content %}
+<div class="min-h-screen flex items-center justify-center bg-white px-4 pt-24">
+    <div class="flex flex-col items-center w-full max-w-2xl space-y-10">
+
+        <!-- Upload Form with Clickable Image -->
+        <form method="POST" action="/upload" enctype="multipart/form-data" class="flex flex-col items-center space-y-2">
+            <input type="file" name="csvfile" id="csvfile" accept=".csv" class="hidden" onchange="this.form.submit()">
+            <label for="csvfile" class="cursor-pointer">
+                <img src="{{ url_for('static', filename='image/csv.png') }}" alt="CSV Icon" class="w-36 hover:scale-105 transition-transform duration-200 mx-auto">
+                <p class="mt-2 text-sm text-gray-600 text-center">Click the icon to select a CSV file</p>
+            </label>
+        </form>
+
+        <!-- Progress Bars -->
+        <div class="w-full space-y-10">
+            <!-- Filtering Progress -->
+            <div>
+                <p class="text-xl font-semibold text-gray-800 mb-2 text-center">Filtering Progress</p>
+                <div class="w-full h-5 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                    <div class="h-full bg-green-500 rounded-full transition-all duration-500" style="width: 70%;"></div>
+                </div>
+            </div>
+
+            <!-- Background Check Progress -->
+            <div>
+                <p class="text-xl font-semibold text-gray-800 mb-2 text-center">Background Check Progress</p>
+                <div class="w-full h-5 bg-gray-200 rounded-full overflow-hidden shadow-inner">
+                    <div class="h-full bg-blue-500 rounded-full transition-all duration-500" style="width: 45%;"></div>
+                </div>
+            </div>
+
+            <!-- Right-aligned Next Button -->
+            <div class="w-full flex justify-end mt-4">
+                <a href="{{ url_for('phone_settings') }}"
+                   class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105">
+                   Next →
+                </a>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

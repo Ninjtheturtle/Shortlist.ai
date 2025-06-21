@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Phone Settings - shortlist.ai{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-white px-6 py-24 flex flex-col items-center space-y-12">
+
+    <!-- Settings Header -->
+    <h1 class="text-3xl font-bold text-center text-gray-800">Call Customization Settings</h1>
+
+    <!-- Checkboxes & Questions Form -->
+    <form class="w-full max-w-2xl space-y-6">
+
+        <!-- Checkboxes -->
+        <div class="space-y-4">
+            <label class="flex items-center space-x-3">
+                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+                <span class="text-lg text-gray-800">Do you want the transcript of the call to be recorded?</span>
+            </label>
+            <label class="flex items-center space-x-3">
+                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+                <span class="text-lg text-gray-800">Do you want the person interviewed to know this is an AI call?</span>
+            </label>
+            <label class="flex items-center space-x-3">
+                <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600">
+                <span class="text-lg text-gray-800">Do you want to include post-call feedback scoring?</span>
+            </label>
+        </div>
+
+        <!-- Editable Questions -->
+        <h2 class="text-2xl font-semibold text-gray-900 pt-12">Edit Interview Questions</h2>
+
+        <div class="space-y-6">
+            <div>
+                <label class="block mb-2 text-gray-700 font-medium">Behavioural Question</label>
+                <textarea class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                          rows="3">Tell me about a time you had to work through a team conflict. What did you do?</textarea>
+            </div>
+
+            <div>
+                <label class="block mb-2 text-gray-700 font-medium">Technical Question</label>
+                <textarea class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-400"
+                          rows="3">How would you optimize a slow-loading web page? Walk me through your approach.</textarea>
+            </div>
+
+            <div>
+                <label class="block mb-2 text-gray-700 font-medium">Critical Thinking Question</label>
+                <textarea class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
+                          rows="3">Imagine you’re tasked with improving a product used by millions daily. What steps would you take first?</textarea>
+            </div>
+        </div>
+
+        <!-- Right-Aligned Next Button -->
+        <div class="w-full flex justify-end pt-6">
+            <a href="{{ url_for('phone_list') }}"
+               class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full shadow-lg transition-transform transform hover:scale-105">
+               Next →
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}
