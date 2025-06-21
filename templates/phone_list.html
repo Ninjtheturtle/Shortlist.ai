@@ -1,97 +1,84 @@
-{% extends 'base.html' %}
-
-{% block title %}Phone List - shortlist.ai{% endblock %}
-
-{% block content %}
+{% extends 'base.html' %} {% block title %}Phone List - shortlist.ai{% endblock
+%} {% block content %}
 <div class="min-h-screen bg-white px-8 md:px-20 py-20">
-    <h1 class="text-3xl font-bold text-center mb-10">Interviewed Applicants</h1>
+  <h1 class="text-3xl font-bold text-center mb-10">Interviewed Applicants</h1>
 
-    <div class="overflow-x-auto">
-        <table class="w-full border border-black text-left">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border border-black px-4 py-2">Name</th>
-                    <th class="border border-black px-4 py-2">LinkedIn Link</th>
-                    <th class="border border-black px-4 py-2">Resume Link</th>
-                    <th class="border border-black px-4 py-2">Status</th>
-                    <th class="border border-black px-4 py-2">Score</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Anirudh (Accepted) -->
-                <tr class="border border-black">
-                    <td class="border border-black px-4 py-2 relative">
-                        <span class="text-lg">Anirudh</span>
-                        <button onclick="toggleDetails(0)" class="absolute top-1 right-1">
-                            <img src="{{ url_for('static', filename='image/information.png') }}" class="w-5 h-5">
-                        </button>
-                    </td>
-                    <td class="border border-black px-4 py-2">
-                        <a href="https://linkedin.com/in/anirudh" class="text-blue-600 underline" target="_blank">
-                            https://linkedin.com/in/anirudh
-                        </a>
-                    </td>
-                    <td class="border border-black px-4 py-2">https://example.com/resume/anirudh.pdf</td>
-                    <td class="border border-black px-4 py-2 text-center">
-                        <img src="{{ url_for('static', filename='image/check.png') }}" class="w-6 mx-auto">
-                    </td>
-                    <td class="border border-black px-4 py-2 text-center">
-                        9.1
-                    </td>
-                </tr>
-                <tr id="details-0" class="hidden border border-black bg-gray-50">
-                    <td colspan="5" class="p-4">
-                        <p><strong>Start Time:</strong> 2025-06-20 14:00</p>
-                        <p><strong>End Time:</strong> 2025-06-20 14:25</p>
-                        <p><strong>Duration:</strong> 0:25:00</p>
-                        <p class="mt-2"><strong>Transcript:</strong></p>
-                        <div class="bg-white border border-gray-300 rounded p-3 mt-1 text-sm text-gray-700">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                        </div>
-                    </td>
-                </tr>
+  <div class="overflow-x-auto">
+    <table class="w-full border border-black text-left">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="border border-black px-4 py-2">Name</th>
+          <th class="border border-black px-4 py-2">LinkedIn Link</th>
+          <th class="border border-black px-4 py-2">Resume Link</th>
+          <th class="border border-black px-4 py-2">Status</th>
+          <th class="border border-black px-4 py-2">Score</th>
+        </tr>
+      </thead>
 
-                <!-- Alexander Li (Rejected) -->
-                <tr class="border border-black">
-                    <td class="border border-black px-4 py-2 relative">
-                        <span class="text-lg">Alexander Li</span>
-                        <button onclick="toggleDetails(1)" class="absolute top-1 right-1">
-                            <img src="{{ url_for('static', filename='image/information.png') }}" class="w-5 h-5">
-                        </button>
-                    </td>
-                    <td class="border border-black px-4 py-2">
-                        <a href="https://linkedin.com/in/alexanderli" class="text-blue-600 underline" target="_blank">
-                            https://linkedin.com/in/alexanderli
-                        </a>
-                    </td>
-                    <td class="border border-black px-4 py-2">https://example.com/resume/alex.pdf</td>
-                    <td class="border border-black px-4 py-2 text-center">
-                        <img src="{{ url_for('static', filename='image/remove.png') }}" class="w-6 mx-auto">
-                    </td>
-                    <td class="border border-black px-4 py-2 text-center text-gray-500 italic">
-                        N/A
-                    </td>
-                </tr>
-                <tr id="details-1" class="hidden border border-black bg-gray-50">
-                    <td colspan="5" class="p-4">
-                        <p><strong>Start Time:</strong> 2025-06-20 15:00</p>
-                        <p><strong>End Time:</strong> 2025-06-20 15:18</p>
-                        <p><strong>Duration:</strong> 0:18:00</p>
-                        <p class="mt-2"><strong>Transcript:</strong></p>
-                        <div class="bg-white border border-gray-300 rounded p-3 mt-1 text-sm text-gray-700">
-                            The candidate displayed strong initiative but lacked clarity in explaining system architecture. Additional prompts were needed to extract deeper insights.
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+      <tbody>
+        {% for applicant in applicants %}
+        <tr>
+          <td>{{ applicant.name }}</td>
+          <td>
+            <a href="{{ applicant.linkedin }}" target="_blank"
+              >{{ applicant.linkedin }}</a
+            >
+          </td>
+          <td>{{ applicant.resume_link }}</td>
+          <td class="text-center">
+            <img
+              id="status-{{ loop.index0 }}"
+              src="/static/image/csv.png"
+              class="w-6 mx-auto"
+            />
+          </td>
+          <td class="text-center">N/A</td>
+        </tr>
+        <tr id="details-{{ loop.index0 }}" class="hidden">
+          <td colspan="5">
+            <p>
+              <strong>Start Time:</strong>
+              <span id="start-{{ loop.index0 }}">...</span>
+            </p>
+            <p>
+              <strong>End Time:</strong>
+              <span id="end-{{ loop.index0 }}">...</span>
+            </p>
+            <p><strong>Transcript:</strong></p>
+            <div id="transcript-{{ loop.index0 }}">
+              Generating transcript...
+            </div>
+          </td>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <script>
-    function toggleDetails(index) {
-        const row = document.getElementById(`details-${index}`);
-        row.classList.toggle('hidden');
+  async function fetchStatus(email, index) {
+    const response = await fetch(`/call_status_poll?email=${email}`);
+    const data = await response.json();
+
+    if (data.status === "done") {
+      document.getElementById(`status-${index}`).src =
+        "/static/image/check.png";
+      document.getElementById(`transcript-${index}`).innerText =
+        data.transcript;
+      document.getElementById(`start-${index}`).innerText = data.start_time;
+      document.getElementById(`end-${index}`).innerText = data.end_time;
+    } else {
+      setTimeout(() => fetchStatus(email, index), 3000); // retry
     }
+  }
+</script>
+
+<script>
+  function toggleDetails(index) {
+    const row = document.getElementById(`details-${index}`);
+    row.classList.toggle("hidden");
+  }
 </script>
 {% endblock %}
