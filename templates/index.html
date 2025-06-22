@@ -44,7 +44,7 @@
             0 0 60px 20px rgba(140, 140, 255, 0.507),
             0 0 120px 40px rgba(200, 200, 255, 0.582);
         filter: blur(0.2px);
-        z-index: 2; /* above the stars */
+        z-index: 2; 
         position: absolute;
         top: 65%;
         left: 50%;
@@ -92,7 +92,7 @@
         height: 100%;
         background: transparent;
         overflow: hidden;
-        z-index: 0; /* behind the blackhole */
+        z-index: 0; 
     }
 
     .star {
@@ -134,8 +134,6 @@
     </div>
 </div>
 
-
-<!-- Scroll-Revealed Text -->
 <div id="blackhole-reveal">
 </div>
 
@@ -143,7 +141,7 @@
 <div id="page-content">
         <!-- About Section -->
     <section id="about" class="relative py-20 overflow-hidden">
-        <!-- Background elements -->
+
         <div class="absolute inset-0 bg-gray-900 z-0"></div>
         <div class="absolute -bottom-04 w-64 h-64 bg-indigo-900 rounded-full filter blur-3xl opacity-60 z-0"></div>
         <div class="absolute -bottom-32 -right-32 w-64 h-64 bg-indigo-900 rounded-full filter blur-3xl opacity-80 z-0"></div>
@@ -213,7 +211,6 @@
 
     <!-- Features Section -->
     <section id="features" class="relative py-20 overflow-hidden">
-        <!-- Background elements -->
         <div class="absolute inset-0 bg-gray-900 z-0"></div>
         <div class="absolute -top-04 -left-5 w-64 h-64 bg-indigo-900 rounded-full filter blur-3xl opacity-50 z-0"></div>
         <div class="absolute -top-09 -right-5 w-64 h-64 bg-indigo-900 rounded-full filter blur-3xl opacity-50 z-0"></div>
@@ -323,20 +320,18 @@
 <script>
     const starContainer = document.getElementById('stars');
 
-    const blackholeX = 50; // % from left
-    const blackholeY = 100; // % from top
-    const blackholeRadius = 40; // % radius area to avoid
+    const blackholeX = 50;
+    const blackholeY = 100; 
+    const blackholeRadius = 40; 
 
     for (let i = 0; i < 120; i++) {
         const x = Math.random() * 100;
         const y = Math.random() * 100;
 
-        // Distance from blackhole center
         const dx = x - blackholeX;
         const dy = y - blackholeY;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        // Skip stars inside the blackhole radius
         if (distance < blackholeRadius) continue;
 
         const star = document.createElement('div');
@@ -379,7 +374,7 @@
             pageContent.classList.add('revealed');
             unlockScroll();
             cooldown = false;
-        }, 1500);  // <-- increased cooldown here
+        }, 1500);  
     }
 
     function zoomIn() {
@@ -393,7 +388,6 @@
         zoomContainer.style.transform = 'scale(3.5)';
         zoomContainer.style.opacity = '0';
 
-        // Force reflow to apply the starting scale
         zoomContainer.offsetHeight;
 
         zoomContainer.style.transition = 'transform 1s ease, opacity 1s ease';
@@ -403,7 +397,7 @@
         setTimeout(() => {
             pageContent.classList.remove('revealed');
             cooldown = false;
-        }, 2000);  // <-- increased cooldown here
+        }, 2000); 
     }
 
 
@@ -412,13 +406,11 @@
     window.addEventListener('wheel', function (e) {
         const delta = e.deltaY;
 
-        // Scroll down to enter
         if (!isZoomedIn && !cooldown && delta > 10) {
             e.preventDefault();
             zoomOut();
         }
 
-        // Scroll up at top to go back
         if (isZoomedIn && window.scrollY < 60 && delta < -10 && !cooldown) {
             e.preventDefault();
             zoomIn();
