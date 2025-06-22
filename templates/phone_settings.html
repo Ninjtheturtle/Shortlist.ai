@@ -85,17 +85,18 @@ endblock %} {% block content %}
         document.getElementById("critical").value,
       ];
 
+      // Save questions first
       fetch("/phone_settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions: questions }),
       }).then((res) => {
         if (res.ok) {
-          // Initiate actual Twilio call before redirect
+          // Only call initiate_fake_call ONCE, then redirect
           fetch("/initiate_fake_call", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({ listingID: "{{ job.job_id }}" }),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ listingID: "{{ job.job_id }}" }),
           }).then(() => {
             window.location.href = "{{ url_for('phone_list') }}";
           });

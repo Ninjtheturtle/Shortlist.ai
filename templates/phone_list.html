@@ -2,7 +2,6 @@
 %} {% block content %}
 <div class="min-h-screen bg-white px-8 md:px-20 py-20">
   <h1 class="text-3xl font-bold text-center mb-10">Interviewed Applicants</h1>
-
   <div class="overflow-x-auto">
     <table class="w-full border border-black text-left">
       <thead>
@@ -14,71 +13,141 @@
           <th class="border border-black px-4 py-2">Score</th>
         </tr>
       </thead>
-
-      <tbody>
-        {% for applicant in applicants %}
-        <tr>
-          <td>{{ applicant.name }}</td>
-          <td>
-            <a href="{{ applicant.linkedin }}" target="_blank"
-              >{{ applicant.linkedin }}</a
-            >
-          </td>
-          <td>{{ applicant.resume_link }}</td>
-          <td class="text-center">
-            <img
-              id="status-{{ loop.index0 }}"
-              src="/static/image/csv.png"
-              class="w-6 mx-auto"
-            />
-          </td>
-          <td class="text-center">N/A</td>
-        </tr>
-        <tr id="details-{{ loop.index0 }}" class="hidden">
-          <td colspan="5">
-            <p>
-              <strong>Start Time:</strong>
-              <span id="start-{{ loop.index0 }}">...</span>
-            </p>
-            <p>
-              <strong>End Time:</strong>
-              <span id="end-{{ loop.index0 }}">...</span>
-            </p>
-            <p><strong>Transcript:</strong></p>
-            <div id="transcript-{{ loop.index0 }}">
-              Generating transcript...
-            </div>
-          </td>
-        </tr>
-
-        {% endfor %}
+      <tbody id="applicants-tbody">
+        <!-- Filled by JS -->
       </tbody>
     </table>
   </div>
 </div>
 
 <script>
-  async function fetchStatus(email, index) {
-    const response = await fetch(`/call_status_poll?email=${email}`);
-    const data = await response.json();
+  const statusIcons = {
+    waiting: "/static/image/csv.png",
+    initiated: "/static/image/waiting.png",
+    ringing: "/static/image/waiting.png",
+    answered: "/static/image/waiting.png",
+    done: "/static/image/check.png",
+    completed: "/static/image/check.png",
+    failed: "/static/image/remove.png",
+  };
 
-    if (data.status === "done") {
-      document.getElementById(`status-${index}`).src =
-        "/static/image/check.png";
-      document.getElementById(`transcript-${index}`).innerText =
-        data.transcript;
-      document.getElementById(`start-${index}`).innerText = data.start_time;
-      document.getElementById(`end-${index}`).innerText = data.end_time;
-    } else {
-      setTimeout(() => fetchStatus(email, index), 3000); // retry
-    }
+  function formatTime(ts) {
+    if (!ts) return "...";
+    const d = new Date(ts);
+    return d.toLocaleString();
   }
-</script>
 
-<script>
+  function escapeHtml(text) {
+    if (!text) return "";
+    return text.replace(/[&<>"']/g, function (m) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;",
+      }[m];
+    });
+  }
+
+  // Render transcript as Q&A
+  function renderTranscript(history) {
+    if (!Array.isArray(history) || history.length === 0)
+      return "No transcript yet.";
+    let html = '<div class="space-y-2">';
+    history.forEach((item) => {
+      if (!item.role || !item.content) return;
+      let role =
+        item.role === "interviee"
+          ? "Interviewee"
+          : item.role.charAt(0).toUpperCase() + item.role.slice(1);
+      let color =
+        item.role === "interviewer" || item.role === "assistant"
+          ? "text-blue-800"
+          : "text-gray-800";
+      html += `<div class="mb-1"><span class="font-semibold ${color}">${escapeHtml(
+        role
+      )}:</span> <span>${escapeHtml(item.content)}</span></div>`;
+    });
+    html += "</div>";
+    return html;
+  }
+
+  function renderApplicants(applicants) {
+    const tbody = document.getElementById("applicants-tbody");
+    tbody.innerHTML = "";
+    applicants.forEach((app, idx) => {
+      const conv = app.conversation;
+      const status = conv ? conv.status || "waiting" : "waiting";
+      const icon = statusIcons[status] || statusIcons["waiting"];
+      const started =
+        conv && conv.started_at ? formatTime(conv.started_at) : "...";
+      const ended =
+        conv && conv.updated_at ? formatTime(conv.updated_at) : "...";
+      let transcriptHtml = "Generating transcript...";
+      if (conv && conv.history) {
+        try {
+          // If already parsed, use as is; else, parse JSON string
+          let history = Array.isArray(conv.history)
+            ? conv.history
+            : JSON.parse(conv.history);
+          transcriptHtml = renderTranscript(history);
+        } catch {
+          transcriptHtml = "Transcript unavailable.";
+        }
+      }
+
+      tbody.innerHTML += `
+      <tr class="border-b hover:bg-gray-50 transition">
+        <td class="px-4 py-2 relative">
+          <span class="text-lg font-medium">${escapeHtml(app.name)}</span>
+          <button onclick="toggleDetails(${idx})" class="absolute top-1 right-1">
+            <img src="/static/image/information.png" class="w-5 h-5" alt="info"/>
+          </button>
+        </td>
+        <td class="px-4 py-2">
+          <a href="${escapeHtml(
+            app.linkedin
+          )}" class="text-blue-600 underline" target="_blank">
+            ${escapeHtml(app.linkedin)}
+          </a>
+        </td>
+        <td class="px-4 py-2">${escapeHtml(app.resume_link)}</td>
+        <td class="px-4 py-2 text-center">
+          <img id="status-${idx}" src="${icon}" class="w-6 mx-auto" alt="status"/>
+        </td>
+        <td class="px-4 py-2 text-center">${escapeHtml(app.score || "N/A")}</td>
+      </tr>
+      <tr id="details-${idx}" class="hidden border-b bg-gray-50">
+        <td colspan="5" class="p-4">
+          <p><strong>Start Time:</strong> <span id="start-${idx}">${started}</span></p>
+          <p><strong>End Time:</strong> <span id="end-${idx}">${ended}</span></p>
+          <p class="mt-2"><strong>Transcript:</strong></p>
+          <div id="transcript-${idx}" class="bg-white border border-gray-300 rounded p-3 mt-1 text-sm" style="white-space:pre-line; max-height:300px; overflow:auto;">
+            ${transcriptHtml}
+          </div>
+        </td>
+      </tr>
+    `;
+    });
+  }
+
   function toggleDetails(index) {
     const row = document.getElementById(`details-${index}`);
-    row.classList.toggle("hidden");
+    if (row) row.classList.toggle("hidden");
   }
+
+  async function pollConversations() {
+    try {
+      const res = await fetch("/api/conversations_status");
+      const applicants = await res.json();
+      renderApplicants(applicants);
+    } catch (e) {
+      // Optionally show error
+    }
+    setTimeout(pollConversations, 3000);
+  }
+
+  window.onload = pollConversations;
 </script>
 {% endblock %}
