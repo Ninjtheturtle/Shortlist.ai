@@ -3,13 +3,11 @@ import csv
 import io
 import random
 import uuid
-import fitz
 import requests
 import numpy as np
 from flask import Flask, request, render_template, jsonify
 from supabase import create_client, Client
 from dotenv import load_dotenv
-from sklearn.metrics.pairwise import cosine_similarity
 from openai import OpenAI
 from colorama import init, Fore, Style
 from flask import session  # make sure this is imported at the top
