@@ -76,115 +76,8 @@
                             <th class="px-6 py-4 text-center">Score</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-800 text-gray-300">
-
-                        <tr class="table-row">
-                            <td class="px-6 py-4 relative">
-                                <span class="text-lg font-medium text-white">Anirudh</span>
-                                <button onclick="toggleDetails(0)" class="absolute top-4 right-6 text-gray-400 hover:text-white transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="https://linkedin.com/in/anirudh" class="text-indigo-400 hover:text-indigo-300 underline transition-colors" target="_blank">
-                                    linkedin.com/in/anirudh
-                                </a>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="https://example.com/resume/anirudh.pdf" class="text-indigo-400 hover:text-indigo-300 underline transition-colors" target="_blank">
-                                    View Resume
-                                </a>
-                            </td>
-                            <td class="px-6 py-4 text-center status-accepted">
-                                <div class="flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-                                    </svg>
-                                    
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-center font-semibold text-white">
-                                9.1
-                            </td>
-                        </tr>
-                        <tr id="details-0" class="hidden">
-                            <td colspan="5" class="p-6 bg-gray-900/50 transcript-box">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                    <div>
-                                        <p class="text-sm text-gray-400">Start Time</p>
-                                        <p class="text-white">2025-06-22 14:00</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-400">End Time</p>
-                                        <p class="text-white">2025-06-22 14:01</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-400">Duration</p>
-                                        <p class="text-white">0:00:43</p>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-400 mb-2">Transcript:</p>
-                                <div class="p-4 rounded bg-gray-800/50 text-gray-300 text-sm">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr class="table-row">
-                            <td class="px-6 py-4 relative">
-                                <span class="text-lg font-medium text-white">Alexander Li</span>
-                                <button onclick="toggleDetails(1)" class="absolute top-4 right-6 text-gray-400 hover:text-white transition-colors">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z" clip-rule="evenodd" />
-                                    </svg>
-                                </button>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="https://linkedin.com/in/alexanderli" class="text-indigo-400 hover:text-indigo-300 underline transition-colors" target="_blank">
-                                    linkedin.com/in/alexanderli
-                                </a>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="https://example.com/resume/alex.pdf" class="text-indigo-400 hover:text-indigo-300 underline transition-colors" target="_blank">
-                                    View Resume
-                                </a>
-                            </td>
-                            <td class="px-6 py-4 text-center status-rejected">
-                                <div class="flex items-center justify-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                    </svg>
-                                    
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-center text-gray-400 italic">
-                                N/A
-                            </td>
-                        </tr>
-                        <tr id="details-1" class="hidden">
-                            <td colspan="5" class="p-6 bg-gray-900/50 transcript-box">
-                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                                    <div>
-                                        <p class="text-sm text-gray-400">Start Time</p>
-                                        <p class="text-white">N/A</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-400">End Time</p>
-                                        <p class="text-white">N/A</p>
-                                    </div>
-                                    <div>
-                                        <p class="text-sm text-gray-400">Duration</p>
-                                        <p class="text-white">N/A</p>
-                                    </div>
-                                </div>
-                                <p class="text-sm text-gray-400 mb-2">Transcript:</p>
-                                <div class="p-4 rounded bg-gray-800/50 text-gray-300 text-sm">
-                                    The transcript will be shown here...
-                                </div>
-                            </td>
-                        </tr>
+                    <tbody id="applicants-tbody" class="divide-y divide-gray-800 text-gray-300">
+                        <!-- Filled by JS -->
                     </tbody>
                 </table>
             </div>
@@ -237,6 +130,23 @@
         return d.toLocaleString();
     }
 
+    function calculateDuration(start, end) {
+        if (!start || !end) return "N/A";
+        try {
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            const durationMs = endDate - startDate;
+            
+            const seconds = Math.floor((durationMs / 1000) % 60);
+            const minutes = Math.floor((durationMs / (1000 * 60)) % 60);
+            const hours = Math.floor((durationMs / (1000 * 60 * 60)) % 24);
+            
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        } catch {
+            return "N/A";
+        }
+    }
+
     function escapeHtml(text) {
         if (!text) return "";
         return text.replace(/[&<>"']/g, function (m) {
@@ -280,13 +190,20 @@
             const conv = app.conversation;
             const status = conv ? conv.status || "waiting" : "waiting";
             const icon = statusIcons[status] || statusIcons["waiting"];
+            const interviewScore = conv ? conv.score || "N/A" : "N/A";
             const started =
-                conv && conv.started_at ? formatTime(conv.started_at) : "...";
+                conv && conv.started_at ? formatTime(conv.started_at) : "N/A";
             const ended =
-                conv && conv.updated_at ? formatTime(conv.updated_at) : "...";
+                conv && conv.updated_at ? formatTime(conv.updated_at) : "N/A";
+            const duration = calculateDuration(
+                conv && conv.started_at ? conv.started_at : null,
+                conv && conv.updated_at ? conv.updated_at : null
+            );
+            
             let transcriptHtml = "Generating transcript...";
             if (conv && conv.history) {
                 try {
+                    // If already parsed, use as is; else, parse JSON string
                     let history = Array.isArray(conv.history)
                         ? conv.history
                         : JSON.parse(conv.history);
@@ -324,7 +241,9 @@
                         ${status.charAt(0).toUpperCase() + status.slice(1)}
                     </div>
                 </td>
-                <td class="px-6 py-4 text-center font-semibold text-white">${escapeHtml(app.score || "N/A")}</td>
+                <td class="px-6 py-4 text-center font-semibold ${app.score ? 'text-white' : 'text-gray-400 italic'}">
+                    ${escapeHtml(interviewScore || "N/A")}
+                </td>
             </tr>
             <tr id="details-${idx}" class="hidden">
                 <td colspan="5" class="p-6 bg-gray-900/50 transcript-box">
@@ -339,7 +258,7 @@
                         </div>
                         <div>
                             <p class="text-sm text-gray-400">Duration</p>
-                            <p class="text-white">Calculating...</p>
+                            <p class="text-white">${duration}</p>
                         </div>
                     </div>
                     <p class="text-sm text-gray-400 mb-2">Transcript:</p>

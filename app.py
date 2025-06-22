@@ -10,6 +10,9 @@ from supabase import create_client, Client as SupabaseClient
 from dotenv import load_dotenv
 from openai import OpenAI
 from colorama import init, Fore, Style
+from sklearn.metrics.pairwise import cosine_similarity
+import fitz
+
 
 init(autoreset=True)
 
@@ -205,7 +208,7 @@ def initiate_fake_call():
 
     try:
         response = requests.post(
-    "https://ec0f-192-159-180-156.ngrok-free.app/initiate_fake_call",
+    "https://542c-192-159-180-156.ngrok-free.app/initiate_fake_call",
     data={"listingID": listing_id},  # ✅ send as form data
     timeout=10
 )
