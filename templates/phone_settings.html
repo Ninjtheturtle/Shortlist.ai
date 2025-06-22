@@ -169,49 +169,52 @@
     </div>
 </div>
 
-  <script>
+<script>
 
-   // Parallax effect for gradient circles
-    document.addEventListener('DOMContentLoaded', function() {
-        const circles = document.querySelectorAll('.parallax-circle');
+// Parallax effect for gradient circles
+document.addEventListener('DOMContentLoaded', function() {
+    const circles = document.querySelectorAll('.parallax-circle');
+    
+    window.addEventListener('scroll', function() {
+        const scrollPosition = window.pageYOffset;
         
-        window.addEventListener('scroll', function() {
-            const scrollPosition = window.pageYOffset;
+        circles.forEach(circle => {
+            const speed = parseFloat(circle.getAttribute('data-speed'));
+            const yPos = -(scrollPosition * speed);
             
-            circles.forEach(circle => {
-                const speed = parseFloat(circle.getAttribute('data-speed'));
-                const yPos = -(scrollPosition * speed);
-                
-                // Apply the transform with the calculated position
-                circle.style.transform = `translate3d(0, ${yPos}px, 0)`;
-            });
+            // Apply the transform with the calculated position
+            circle.style.transform = `translate3d(0, ${yPos}px, 0)`;
+        });
+    }); // Added missing closing for scroll event listener
+});
 
-    function submitQuestions() {
-      const questions = [
+function submitQuestions() {
+    const questions = [
         document.getElementById("behavioral").value,
         document.getElementById("technical").value,
         document.getElementById("critical").value,
-      ];
+    ];
 
-      fetch("/phone_settings", {
+    fetch("/phone_settings", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ questions: questions }),
-      }).then((res) => {
+    }).then((res) => {
         if (res.ok) {
-          // Initiate actual Twilio call before redirect
-          fetch("/initiate_fake_call", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({ listingID: "{{ job.job_id }}" }),
-          }).then(() => {
-            window.location.href = "{{ url_for('phone_list') }}";
-          });
+            // Initiate actual Twilio call before redirect
+            fetch("/initiate_fake_call", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams({ listingID: "{{ job.job_id }}" }),
+            }).then(() => {
+                window.location.href = "{{ url_for('phone_list') }}";
+            });
         } else {
-          alert("Failed to save questions. Try again.");
+            alert("Failed to save questions. Try again.");
         }
-      });
-    }
-  </script>
-</div>
+    });
+}
+
+</script>
+
 {% endblock %}
