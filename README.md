@@ -1,64 +1,71 @@
 # 🧠 Shortlist.ai
 
-**Shortlist.ai** is an AI-powered hiring pipeline that automates resume screening, voice-based interviews, and candidate ranking — helping recruiters identify top talent faster and more accurately.
+**Shortlist.ai** is a fully automated AI hiring pipeline that ranks resumes by meaning, conducts voice interviews using LLMs, and generates a recruiter-ready shortlist—all without manual screening.
 
 ---
 
-## 🚨 Problem
+## ⚙️ Architecture Overview
 
-Recruiters face application overload. Traditional ATS systems rely on keyword filters that discard qualified candidates due to phrasing mismatches. This results in longer hiring cycles, missed opportunities, and inefficient screening. 
+**Shortlist.ai** is built as a modular, cloud-ready system:
 
----
-
-## ✅ Solution
-
-Shortlist.ai offers a fully automated hiring flow:
-
-- **Semantic Matching**: Converts resumes and job descriptions into vector embeddings to assess actual meaning, not keywords.
-- **AI Voice Interviews**: LLM-powered agents conduct dynamic, adaptive voice interviews with top candidates.
-- **Scoring & Ranking**: Applicants are scored (1–10) using AI-driven analysis of interview transcripts and background check results.
-- **Recruiter Dashboard**: Ranked candidates, full transcripts, and summaries are delivered in a clean, self-serve dashboard.
+- **Backend**: Python Flask REST API containerized with Docker, using Supabase for user auth and Postgres data storage
+- **LLM Integration**: Gemini Pro used for transcript analysis, follow-up generation, and candidate scoring
+- **Voice Interface**: Real-time bidirectional interviews conducted via Twilio Voice
+- **Semantic Engine**: Embedding-based resume–JD matching using cosine similarity on vector representations
+- **Dashboard**: Recruiter-facing React frontend to display shortlists, interview transcripts, and scores (in progress)
 
 ---
 
-## 🎯 Market Opportunity
+## 🧠 Core AI Modules
 
-- **HR Tech Market**: $62B globally
-- **ATS Segment**: $3.3B projected growth
-- **Initial SOM**: $10M+ by onboarding 1,000 recruiters in mid-sized companies with limited intelligent tooling
-
----
-
-## 💵 Business Model
-
-- **Subscription**: $149/month per recruiter seat
-- **Usage-based Revenue**: Pay-per-use for AI interviews and background checks
+- **Semantic Matching**: Transforms resumes and job descriptions into embeddings and selects top matches by vector similarity
+- **AI Interviewer**: Voice calls generate job-specific, adaptive follow-up questions using LLM prompt chaining
+- **Scoring Algorithm**: Combines similarity score, LLM-assessed verbal response quality, and background check results into a 10-point scale
 
 ---
 
-## 📈 Traction
-- **Tech Stack**: Flask, Supabase, Gemini, Twilio Voice, Docker — modular for enterprise scaling
+## 🔐 Compliance & Data Governance
+
+- **GDPR**: All user data is encrypted at rest and processed with opt-in consent. Deletion and access logs are audit-tracked.
+- **FCRA**: Integrated background check workflows follow U.S. federal compliance standards including adverse action protocol
+- **Security**: Access control enforced via Supabase RLS. All endpoints secured with token-based auth. Audit logs enabled for traceability.
 
 ---
 
-## 🧠 Differentiation
+## 📈 Deployment & Scalability
 
-Shortlist.ai is **not** an ATS. Instead of static forms and rigid filters, it uses semantic search and LLM voice interviews to deliver faster, deeper, and fairer hiring decisions — without manual screening.
+- **Containers**: Dockerized backend with Flask and NGINX/Gunicorn for horizontal scalability
+- **Database**: Supabase/Postgres with real-time update triggers
+- **Modular Scaling**: Services designed for incremental rollout (resume parsing, scoring, voice interviews)
 
 ---
 
-## 🚧 MVP & Risk Mitigation
+## 💼 Recruiter Workflow
 
-### MVP Features:
-- Resume–job semantic matching
-- AI-led interviews
-- Candidate scoring
-- Recruiter dashboard
+1. Upload job description → vector embedding created
+2. Resume batch ingested → top 10 candidates selected via semantic filtering
+3. Voice interviews scheduled → AI conducts interview with LLM prompts
+4. Responses analyzed → candidates scored and ranked
+5. Recruiter receives dashboard of top candidates with transcript & score
 
-### Risk Management:
-- **Bias Control**: Pilots anonymize candidate data; models tuned with recruiter feedback
-- **GDPR**: Enforces encrypted, consent-based data handling
-- **FCRA**: Background checks comply with federal screening and dispute standards
-- **Infrastructure**: Modular backend enables phased rollout and reduces scaling risk
+---
+
+## 🚀 MVP Status
+
+The MVP includes:
+- Resume–JD semantic matcher
+- Voice interview system with adaptive follow-ups
+- LLM scoring + ranking engine
+- Self-serve recruiter dashboard (in development)
+
+---
+
+## 📌 Roadmap
+
+- [x] Core LLM integration + scoring
+- [x] Voice infrastructure (Twilio)
+- [ ] Frontend dashboard (React)
+- [ ] Analytics module for hiring bias tracking
+- [ ] SOC 2 preparation
 
 ---
